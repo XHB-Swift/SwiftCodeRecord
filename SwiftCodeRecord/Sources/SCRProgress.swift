@@ -53,6 +53,12 @@ public class SCRProgressView: UIView {
         }
     }
     
+    public init(state: SCRProgressView.SCRProgressMaskState) {
+        super.init(frame: .zero)
+        setupLayers()
+        self.maskState = state
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayers()
@@ -71,9 +77,8 @@ public class SCRProgressView: UIView {
     public func setProgressConfig(_ config: SCRProgressConfig) {
         if progressLayer?.frame == .zero {
             progressLayer?.frame = self.bounds
-            progressLayer?.lineWidth = self.bounds.height
         }
-        if bottomLayer?.frame == .zero {
+        if bottomLayer != nil && bottomLayer?.frame == .zero {
             bottomLayer?.frame = self.bounds
         }
         if maskState != .none {
@@ -82,26 +87,41 @@ public class SCRProgressView: UIView {
             }
         }
         progressLayer?.fillColor = config.trackTintColor.cgColor
-        self.backgroundColor = config.progressTintColor
+        bottomLayer?.fillColor = config.progressTintColor.cgColor
         progressLayer?.path = config.progressShape.cgPath
+        self.backgroundColor = config.progressTintColor
     }
 }
 
-struct SCRProgressViewRepresentable: UIViewRepresentable {
+struct SCRSView<V: UIView>: UIViewRepresentable {
     
-    typealias UIViewType = SCRProgressView
+    typealias UIViewType = V
     
-    var progressConfig: SCRProgressConfig
-    var progressViewType = SCRProgressView.SCRProgressMaskState.none
+    var makeView: () -> V
+    var updater: (V, Context) -> Void
     
-    func makeUIView(context: Context) -> SCRProgressView {
-        let view = SCRProgressView(frame: CGRect.zero)
-        view.maskState = progressViewType
-        view.setProgressConfig(progressConfig)
-        return view
+    init(_ makeView: @escaping @autoclosure () -> V,
+         _ updater: @escaping (V, Context) -> Void) {
+        self.makeView = makeView
+        self.updater = updater
     }
     
-    func updateUIView(_ uiView: SCRProgressView, context: Context) {
-        uiView.setProgressConfig(progressConfig)
+    init(_ makeView: @escaping @autoclosure () -> V,
+         _ updater: @escaping (V) -> Void) {
+        self.makeView = makeView
+        self.updater = { view , _ in updater(view) }
+    }
+    
+    init(_ makeView: @escaping @autoclosure () -> V) {
+        self.makeView = makeView
+        self.updater = { _, _ in }
+    }
+    
+    func makeUIView(context: Context) -> V {
+        return self.makeView()
+    }
+    
+    func updateUIView(_ uiView: V, context: Context) {
+        self.updater(uiView, context)
     }
 }
