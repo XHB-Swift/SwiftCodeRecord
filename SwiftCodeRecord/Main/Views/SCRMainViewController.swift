@@ -34,10 +34,12 @@ class SCRMainViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let title = self.mainViewModel[indexPath].attributedTitle
+        let skipConfig = SCRRouterSkipConfig<String>(parameters: title.string, skipForm: .push, parameterName: "title")
+        SCRRouter.router.jumpTo(url: SCRRouter.SCRRouterPageUnsplash, from: self, with: skipConfig)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.mainViewModel.tableViewRowHeight(at: indexPath)
+        return self.mainViewModel[indexPath].attributedTitleSize.height
     }
 }

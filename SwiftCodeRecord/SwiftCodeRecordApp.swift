@@ -15,12 +15,11 @@ class SwiftCodeRecordApp: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        
         let main = SCRMainViewController()
         let navigationCtrl = UINavigationController(rootViewController: main)
         window?.rootViewController = navigationCtrl
-        
         window?.makeKeyAndVisible()
+        SCRRouter.router.register(pages: [(SCRRouter.SCRRouterPageUnsplash, UNSViewController.self)])
         
         return true
     }

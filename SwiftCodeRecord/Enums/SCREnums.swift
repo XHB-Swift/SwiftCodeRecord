@@ -12,5 +12,5 @@ public let SCRScreenSize = UIScreen.main.bounds.size
 public enum SCRErrorEnum: Error {
     
     case noFilePath
-    
+    case convertToObject
 }

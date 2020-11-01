@@ -9,6 +9,7 @@ import UIKit
 
 public typealias SCRDrawContentHandler = (CGContext)->Void
 public typealias SCRDrawCompletionHandler = (UIImage)->Void
+private let SCRViewScale = UIScreen.main.scale
 
 public class SCRDrawGenerator {
     
@@ -17,7 +18,7 @@ public class SCRDrawGenerator {
                                  completionHandler: @escaping SCRDrawCompletionHandler) {
         
         DispatchQueue.global().async {
-            UIGraphicsBeginImageContext(size)
+            UIGraphicsBeginImageContextWithOptions(size, false, SCRViewScale)
             if let context = UIGraphicsGetCurrentContext() {
                 contentHandler(context)
             }
@@ -42,7 +43,9 @@ extension NSAttributedString: SCRDrawbale {
                 completionHandler: @escaping SCRDrawCompletionHandler) {
         SCRDrawGenerator.drawImage(size: size, contentHandler: { (context) in
             
-            self.draw(in: CGRect(origin: CGPoint.zero, size: size))
+            let attrSize = self.boundingRect(with: size, options: [.usesFontLeading,.usesLineFragmentOrigin], context: nil).size
+            let drawPoint = CGPoint(x: (size.width - attrSize.width)/2, y: (size.height-attrSize.height)/2)
+            self.draw(at: drawPoint)
             
         }, completionHandler: completionHandler)
     }

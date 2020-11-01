@@ -8,10 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		183CE7FCC7480C62AD545D9E /* Pods_SwiftCodeRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D194C4033468FA269873100 /* Pods_SwiftCodeRecord.framework */; };
+		C6533E43254EEB7100BF8543 /* UNSNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6533E42254EEB7100BF8543 /* UNSNetwork.swift */; };
+		C6533E4E254F08D400BF8543 /* SRCRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6533E4D254F08D400BF8543 /* SRCRouter.swift */; };
 		F4AF0D17254CF4990055DE34 /* UNSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AF0D16254CF4990055DE34 /* UNSViewController.swift */; };
 		F4AF0D1F254CF4AE0055DE34 /* SCRMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AF0D1E254CF4AE0055DE34 /* SCRMainViewController.swift */; };
 		F4AF0D2E254CF5C40055DE34 /* SCRMainTitles.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4AF0D2D254CF5C40055DE34 /* SCRMainTitles.plist */; };
-		F4AF0D45254CFED00055DE34 /* SCRMainDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AF0D44254CFED00055DE34 /* SCRMainDataLoader.swift */; };
 		F4AF0D4B254CFEFB0055DE34 /* SCREnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AF0D4A254CFEFB0055DE34 /* SCREnums.swift */; };
 		F4AF0D53254D00920055DE34 /* SCRMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AF0D52254D00920055DE34 /* SCRMainViewModel.swift */; };
 		F4AF0D62254D0A850055DE34 /* SCRCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AF0D61254D0A850055DE34 /* SCRCell.swift */; };
@@ -46,12 +47,13 @@
 
 /* Begin PBXFileReference section */
 		0D194C4033468FA269873100 /* Pods_SwiftCodeRecord.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftCodeRecord.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6533E42254EEB7100BF8543 /* UNSNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UNSNetwork.swift; sourceTree = "<group>"; };
+		C6533E4D254F08D400BF8543 /* SRCRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRCRouter.swift; sourceTree = "<group>"; };
 		D73A40CEC55F4CC4D6C6B955 /* Pods-SwiftCodeRecord.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftCodeRecord.debug.xcconfig"; path = "Target Support Files/Pods-SwiftCodeRecord/Pods-SwiftCodeRecord.debug.xcconfig"; sourceTree = "<group>"; };
 		E34E40109069766CF753F22C /* Pods-SwiftCodeRecord.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftCodeRecord.release.xcconfig"; path = "Target Support Files/Pods-SwiftCodeRecord/Pods-SwiftCodeRecord.release.xcconfig"; sourceTree = "<group>"; };
 		F4AF0D16254CF4990055DE34 /* UNSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UNSViewController.swift; sourceTree = "<group>"; };
 		F4AF0D1E254CF4AE0055DE34 /* SCRMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRMainViewController.swift; sourceTree = "<group>"; };
 		F4AF0D2D254CF5C40055DE34 /* SCRMainTitles.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SCRMainTitles.plist; sourceTree = "<group>"; };
-		F4AF0D44254CFED00055DE34 /* SCRMainDataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCRMainDataLoader.swift; sourceTree = "<group>"; };
 		F4AF0D4A254CFEFB0055DE34 /* SCREnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCREnums.swift; sourceTree = "<group>"; };
 		F4AF0D52254D00920055DE34 /* SCRMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRMainViewModel.swift; sourceTree = "<group>"; };
 		F4AF0D61254D0A850055DE34 /* SCRCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRCell.swift; sourceTree = "<group>"; };
@@ -116,9 +118,18 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		C6533E41254EEB3000BF8543 /* Networks */ = {
+			isa = PBXGroup;
+			children = (
+				C6533E42254EEB7100BF8543 /* UNSNetwork.swift */,
+			);
+			path = Networks;
+			sourceTree = "<group>";
+		};
 		F4AF0D14254CF4600055DE34 /* Unsplash */ = {
 			isa = PBXGroup;
 			children = (
+				C6533E41254EEB3000BF8543 /* Networks */,
 				F4AF0D15254CF46E0055DE34 /* Views */,
 			);
 			path = Unsplash;
@@ -168,7 +179,6 @@
 		F4AF0D49254CFEE40055DE34 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				F4AF0D44254CFED00055DE34 /* SCRMainDataLoader.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -263,6 +273,7 @@
 				F4F4ADB22546BB9C00F89420 /* UIColorHex.swift */,
 				F4F4ADB72546C95600F89420 /* SCRProgress.swift */,
 				F4AF0D69254D18870055DE34 /* UIImageGenerator.swift */,
+				C6533E4D254F08D400BF8543 /* SRCRouter.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -441,7 +452,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4AF0D45254CFED00055DE34 /* SCRMainDataLoader.swift in Sources */,
 				F4AF0D6A254D18870055DE34 /* UIImageGenerator.swift in Sources */,
 				F4AF0D4B254CFEFB0055DE34 /* SCREnums.swift in Sources */,
 				F4AF0D53254D00920055DE34 /* SCRMainViewModel.swift in Sources */,
@@ -449,6 +459,8 @@
 				F4AF0D1F254CF4AE0055DE34 /* SCRMainViewController.swift in Sources */,
 				F4F4ADAB2546B3FE00F89420 /* SCRCountDownTimer.swift in Sources */,
 				F4AF0D62254D0A850055DE34 /* SCRCell.swift in Sources */,
+				C6533E4E254F08D400BF8543 /* SRCRouter.swift in Sources */,
+				C6533E43254EEB7100BF8543 /* UNSNetwork.swift in Sources */,
 				F4F4ADB32546BB9C00F89420 /* UIColorHex.swift in Sources */,
 				F4AF0D17254CF4990055DE34 /* UNSViewController.swift in Sources */,
 				F4F4AD70254660FE00F89420 /* SwiftCodeRecordApp.swift in Sources */,

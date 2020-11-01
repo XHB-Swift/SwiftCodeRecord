@@ -11,6 +11,7 @@ private class SCRMainTableCell: SCRTableCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.accessoryType = .disclosureIndicator
     }
     
     public required init?(coder: NSCoder) {
@@ -18,10 +19,8 @@ private class SCRMainTableCell: SCRTableCell {
     }
     
     override public func configCell(_ data: SCRDrawbale) {
-        if let d = data as? NSAttributedString {
-            d.drawIn(size: self.contentView.bounds.size) { (image) in
-                self.contentView.layer.contents = image.cgImage
-            }
+        if let attributedText = data as? NSAttributedString {
+            self.textLabel?.attributedText = attributedText
         }
     }
 }
@@ -41,6 +40,7 @@ public class SCRMainViewModel: NSObject, UITableViewDataSource {
         super.init()
         self.tableView = tableView
         self.tableView?.dataSource = self
+        self.tableView?.separatorStyle = .singleLine
         self.tableView?.register(SCRMainTableCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
     
@@ -56,12 +56,12 @@ public class SCRMainViewModel: NSObject, UITableViewDataSource {
                 do {
                     var format = PropertyListSerialization.PropertyListFormat.xml
                     if let titles = try PropertyListSerialization.propertyList(from: plistData, options: .mutableContainersAndLeaves, format: &format) as? [String] {
+                        let commonAttributes: [NSAttributedString.Key:Any] = [.font:UIFont.systemFont(ofSize: 18),.foregroundColor:UIColor.black]
                         _ = titles.map {
-                            let commonAttributes: [NSAttributedString.Key:Any] = [.font:UIFont.systemFont(ofSize: 18),
-                                                                                  .foregroundColor:UIColor.black]
                             let attrTitle = NSAttributedString(string: $0, attributes: commonAttributes)
                             let attrSize = attrTitle.boundingRect(with: maxSize, options: [.usesLineFragmentOrigin,.usesFontLeading], context: nil).size
-                            let mainConfig = SCRMainCellConfiguration(attributedTitle: attrTitle, attributedTitleSize: attrSize)
+                            let newSize = CGSize(width: attrSize.width, height: attrSize.height + 36)
+                            let mainConfig = SCRMainCellConfiguration(attributedTitle: attrTitle, attributedTitleSize: newSize)
                             mainTitleConfigs.append(mainConfig)
                         }
                     }
@@ -76,8 +76,13 @@ public class SCRMainViewModel: NSObject, UITableViewDataSource {
                 if let e = loadError {
                     print("error = \(e)")
                 }else {
-                    self.titles = mainTitleConfigs
-                    self.tableView?.reloadData()
+                    self.titles.append(contentsOf: mainTitleConfigs)
+                    let oldRowCount = self.tableView!.numberOfRows(inSection: 0)
+                    let newRowCount = mainTitleConfigs.count
+                    let newCount = oldRowCount + newRowCount
+                    let newRange = oldRowCount..<newCount
+                    let newIndexPaths = newRange.map { IndexPath(row: $0, section: 0) }
+                    self.tableView?.insertRows(at: newIndexPaths, with: UITableView.RowAnimation.none)
                 }
             }
         }
@@ -89,16 +94,12 @@ public class SCRMainViewModel: NSObject, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as? SCRMainTableCell
-        if cell != nil {
-            cell?.configCell(titles[indexPath.row].attributedTitle)
-        }else {
-            cell = SCRMainTableCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: reuseIdentifier)
-        }
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! SCRMainTableCell
+        cell.configCell(titles[indexPath.row].attributedTitle)
+        return cell
     }
     
-    public func tableViewRowHeight(at indexPath: IndexPath) -> CGFloat {
-        return titles[indexPath.row].attributedTitleSize.height
+    public subscript(index: IndexPath) -> SCRMainCellConfiguration {
+        return titles[index.row]
     }
 }
