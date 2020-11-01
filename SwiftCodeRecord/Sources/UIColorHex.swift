@@ -17,7 +17,7 @@ extension UIColor {
         let r = CGFloat((rgbhHex & 0xFF0000) >> 16)
         let g = CGFloat((rgbhHex & 0xFF00) >> 8)
         let b = CGFloat(rgbhHex & 0xFF)
-        self.init(red: r, green: g, blue: b, alpha: alpha)
+        self.init(r: r, g: g, b: b, alpha: alpha)
     }
     public convenience init?(hex: String) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)

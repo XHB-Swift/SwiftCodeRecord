@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
-import Combine
 
 extension CGFloat {
     
@@ -90,38 +88,5 @@ public class SCRProgressView: UIView {
         bottomLayer?.fillColor = config.progressTintColor.cgColor
         progressLayer?.path = config.progressShape.cgPath
         self.backgroundColor = config.progressTintColor
-    }
-}
-
-struct SCRSView<V: UIView>: UIViewRepresentable {
-    
-    typealias UIViewType = V
-    
-    var makeView: () -> V
-    var updater: (V, Context) -> Void
-    
-    init(_ makeView: @escaping @autoclosure () -> V,
-         _ updater: @escaping (V, Context) -> Void) {
-        self.makeView = makeView
-        self.updater = updater
-    }
-    
-    init(_ makeView: @escaping @autoclosure () -> V,
-         _ updater: @escaping (V) -> Void) {
-        self.makeView = makeView
-        self.updater = { view , _ in updater(view) }
-    }
-    
-    init(_ makeView: @escaping @autoclosure () -> V) {
-        self.makeView = makeView
-        self.updater = { _, _ in }
-    }
-    
-    func makeUIView(context: Context) -> V {
-        return self.makeView()
-    }
-    
-    func updateUIView(_ uiView: V, context: Context) {
-        self.updater(uiView, context)
     }
 }
