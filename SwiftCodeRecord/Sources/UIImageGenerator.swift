@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 public typealias SCRDrawContentHandler = (CGContext)->Void
 public typealias SCRDrawCompletionHandler = (UIImage)->Void
@@ -48,5 +49,18 @@ extension NSAttributedString: SCRDrawbale {
             self.draw(at: drawPoint)
             
         }, completionHandler: completionHandler)
+    }
+}
+
+extension UIImageView {
+    
+    func setImage(_ urlString: String, placeHolder: UIImage?, cornerRadius: CGFloat = 10, fade: CGFloat = 1, scale: CGFloat = SCRViewScale) {
+        if let url = URL(string: urlString) {
+            self.setImage(url)
+        }
+    }
+    
+    func setImage(_ url: URL, placeHolder: UIImage?, cornerRadius: CGFloat = 10, fade: CGFloat = 1, scale: CGFloat = SCRViewScale) {
+        self.kf.setImage(with: url, placeholder: <#T##Placeholder?#>, options: <#T##KingfisherOptionsInfo?#>, progressBlock: <#T##DownloadProgressBlock?##DownloadProgressBlock?##(Int64, Int64) -> Void#>, completionHandler: <#T##((Result<RetrieveImageResult, KingfisherError>) -> Void)?##((Result<RetrieveImageResult, KingfisherError>) -> Void)?##(Result<RetrieveImageResult, KingfisherError>) -> Void#>)
     }
 }

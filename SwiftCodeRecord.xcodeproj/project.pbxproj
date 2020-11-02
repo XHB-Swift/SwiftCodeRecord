@@ -17,6 +17,7 @@
 		F4AF0D53254D00920055DE34 /* SCRMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AF0D52254D00920055DE34 /* SCRMainViewModel.swift */; };
 		F4AF0D62254D0A850055DE34 /* SCRCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AF0D61254D0A850055DE34 /* SCRCell.swift */; };
 		F4AF0D6A254D18870055DE34 /* UIImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AF0D69254D18870055DE34 /* UIImageGenerator.swift */; };
+		F4AF0DDF254F94320055DE34 /* UNSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AF0DDE254F94320055DE34 /* UNSViewModel.swift */; };
 		F4F4AD70254660FE00F89420 /* SwiftCodeRecordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F4AD6F254660FD00F89420 /* SwiftCodeRecordApp.swift */; };
 		F4F4AD74254660FF00F89420 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4F4AD73254660FF00F89420 /* Assets.xcassets */; };
 		F4F4AD77254660FF00F89420 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4F4AD76254660FF00F89420 /* Preview Assets.xcassets */; };
@@ -58,6 +59,7 @@
 		F4AF0D52254D00920055DE34 /* SCRMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRMainViewModel.swift; sourceTree = "<group>"; };
 		F4AF0D61254D0A850055DE34 /* SCRCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRCell.swift; sourceTree = "<group>"; };
 		F4AF0D69254D18870055DE34 /* UIImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageGenerator.swift; sourceTree = "<group>"; };
+		F4AF0DDE254F94320055DE34 /* UNSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UNSViewModel.swift; sourceTree = "<group>"; };
 		F4F4AD6C254660FD00F89420 /* SwiftCodeRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftCodeRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4F4AD6F254660FD00F89420 /* SwiftCodeRecordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCodeRecordApp.swift; sourceTree = "<group>"; };
 		F4F4AD73254660FF00F89420 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		F4AF0D14254CF4600055DE34 /* Unsplash */ = {
 			isa = PBXGroup;
 			children = (
+				F4AF0DDD254F941B0055DE34 /* ViewModel */,
 				C6533E41254EEB3000BF8543 /* Networks */,
 				F4AF0D15254CF46E0055DE34 /* Views */,
 			);
@@ -176,13 +179,6 @@
 			path = Enums;
 			sourceTree = "<group>";
 		};
-		F4AF0D49254CFEE40055DE34 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
 		F4AF0D57254D00990055DE34 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +193,14 @@
 				F4AF0D61254D0A850055DE34 /* SCRCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		F4AF0DDD254F941B0055DE34 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F4AF0DDE254F94320055DE34 /* UNSViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		F4F4AD63254660FD00F89420 = {
@@ -230,7 +234,6 @@
 				F4F4AD9D2546611F00F89420 /* Sources */,
 				F4F4AD6F254660FD00F89420 /* SwiftCodeRecordApp.swift */,
 				F4AF0D43254CFEBA0055DE34 /* Enums */,
-				F4AF0D49254CFEE40055DE34 /* Utils */,
 				F4AF0D32254CF5E30055DE34 /* Main */,
 				F4F4AD73254660FF00F89420 /* Assets.xcassets */,
 				F4F4AD78254660FF00F89420 /* Info.plist */,
@@ -459,6 +462,7 @@
 				F4AF0D1F254CF4AE0055DE34 /* SCRMainViewController.swift in Sources */,
 				F4F4ADAB2546B3FE00F89420 /* SCRCountDownTimer.swift in Sources */,
 				F4AF0D62254D0A850055DE34 /* SCRCell.swift in Sources */,
+				F4AF0DDF254F94320055DE34 /* UNSViewModel.swift in Sources */,
 				C6533E4E254F08D400BF8543 /* SRCRouter.swift in Sources */,
 				C6533E43254EEB7100BF8543 /* UNSNetwork.swift in Sources */,
 				F4F4ADB32546BB9C00F89420 /* UIColorHex.swift in Sources */,

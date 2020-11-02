@@ -14,31 +14,31 @@ private let UNSSecretKey = "zs-H1z_wQGAk7GucbaUheceyLDo9JZ_RYwSPiUohwO8"
 
 //MARK: Request Model
 
-public enum UNSServerOrder: String, Codable {
-    case latest = "latest"
-    case oldest = "oldest"
-    case popular = "popular"
+public enum UNSServerOrder {
+    static let latest = "latest"
+    static let oldest = "oldest"
+    static let popular = "popular"
 }
 
-public enum UNSServerOrientation: String, Codable {
-    case landscape = "landscape"
-    case portrait = "portrait"
-    case squarish = "squarish"
+public enum UNSServerOrientation {
+    static let landscape = "landscape"
+    static let portrait = "portrait"
+    static let squarish = "squarish"
 }
 
-public enum UNSServerColor: String, Codable {
-    case none = ""
-    case black_and_white = "black_and_white"
-    case black = "black"
-    case white = "white"
-    case yellow = "yellow"
-    case orange = "orange"
-    case red = "red"
-    case purple = "purple"
-    case magenta = "magenta"
-    case green = "green"
-    case teal = "teal"
-    case blue = "blue"
+public enum UNSServerColor {
+    static let none = ""
+    static let black_and_white = "black_and_white"
+    static let black = "black"
+    static let white = "white"
+    static let yellow = "yellow"
+    static let orange = "orange"
+    static let red = "red"
+    static let purple = "purple"
+    static let magenta = "magenta"
+    static let green = "green"
+    static let teal = "teal"
+    static let blue = "blue"
 }
 
 public struct UNSServerList: Encodable {
@@ -84,7 +84,7 @@ public struct UNSServerSearch: Encodable {
         var container = encoder.container(keyedBy: UNSCodingKeys.self)
         try container.encode(page,forKey: .page)
         try container.encode(perPage,forKey: .perPage)
-        try container.encode(orderBy.rawValue,forKey: .orderBy)
+        try container.encode(orderBy,forKey: .orderBy)
         try container.encode(collections,forKey: .collections)
         try container.encode(contentFilter,forKey: .contentFilter)
         try container.encode(color,forKey: .color)
@@ -128,25 +128,33 @@ public struct UNSPhoto: Codable {
     
 }
 
-public typealias UNSServerAccessCompletion<T> = (Result<T,Error>) -> Void
+public typealias UNSServerAccessCompletion = (Result<[UNSPhoto],Error>) -> Void
 
 public enum UNSServerPath {
     
-    case list(page: Int)
-    case serach(page: Int, query: String)
+    case list(UNSServerList)
+    case serach(UNSServerSearch)
     
-    private static let headers = ["Authorization": "Client-ID \(UNSAccessKey)"]
+    private static let headers = HTTPHeaders(["Authorization": "Client-ID \(UNSAccessKey)"])
     
-    public func request<T>(completion: @escaping UNSServerAccessCompletion<T>) {
+    private var response: DataRequest? {
         switch self {
-        case .list(page: let page):
+        case .list(let photoList):
             let url = UNSHost + "/photos"
-            let param = UNSServerList(page: page, perPage: 10, orderBy: .latest)
-            AF.request(url, method: .get, parameters: param, headers: HTTPHeaders(Self.headers))
-        case .serach(page: let page, query: let query):
+            return AF.request(url, method: .get, parameters: photoList, headers: Self.headers)
+        case .serach(let query):
             let url = UNSHost + "/search/photos"
-            let param = UNSServerList(page: page, perPage: 10, orderBy: .latest)
-            break
+            return AF.request(url, method: .get, parameters: query, headers: Self.headers)
         }
+    }
+    
+    public func requestPhotos(completion: @escaping UNSServerAccessCompletion) {
+        self.response?.responseData(completionHandler: { (response) in
+            if let error = response.error {
+                completion(.failure(error))
+            }else {
+                completion(SCRNetworkJSONConvertable<[UNSPhoto]>.toObject(response.data!))
+            }
+        })
     }
 }
